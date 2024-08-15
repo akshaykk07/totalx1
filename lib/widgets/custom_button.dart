@@ -1,7 +1,6 @@
 // Custom Button Class........
 import 'package:flutter/material.dart';
 
-
 import 'apptext.dart';
 import 'constants/colors.dart';
 
