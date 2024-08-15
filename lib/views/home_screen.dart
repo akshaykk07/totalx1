@@ -27,6 +27,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: whiteone,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: customBalck,
         title: const Row(
           children: [
@@ -46,7 +47,7 @@ class HomeScreen extends StatelessWidget {
       body: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -148,172 +149,177 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  addUser(BuildContext context, Size size, formkey) { // add new user dialog.....
+  addUser(BuildContext context, Size size, formkey) {
+    // add new user dialog.....
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         final basicControllors =
             Provider.of<BasicControllors>(context, listen: false);
-        return Stack(
-          children: [
-            Dialog(
-              backgroundColor: white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: SingleChildScrollView(
-                  child: Form(
-                    key: formkey,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+        return Dialog(
+          backgroundColor: white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: SingleChildScrollView(
+              child: Form(
+                key: formkey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const AppText(
+                      name: 'Add A New User',
+                      size: 13,
+                      fontWeight: FontWeight.w600,
+                      colors: customBalck,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    // Using Consumer to only rebuild this part when pickedImage changes
+                    InkWell(
+                      onTap: () {
+                        Provider.of<BasicControllors>(context, listen: false)
+                            .pickImage();
+                      },
+                      child: Consumer<BasicControllors>(
+                        builder: (context, basicprovider, child) {
+                          return basicprovider.pickedImage != null
+                              ? Align(
+                                  alignment: Alignment.center,
+                                  child: CircleAvatar(
+                                    radius: 40,
+                                    backgroundImage: FileImage(
+                                        File(basicprovider.pickedImage!.path)),
+                                  ),
+                                )
+                              : Align(
+                                  alignment: Alignment.center,
+                                  child: Image.asset('assets/img.png'),
+                                );
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const AppText(
+                      name: 'Name',
+                      size: 12,
+                      fontWeight: FontWeight.w400,
+                      colors: Colors.grey,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    CustomTextfield(
+                      size: size,
+                      hint: '',
+                      controller: basicControllors.nameControllor,
+                      type: false,
+                      keyboardType: TextInputType.name,
+                      validator: (val) {
+                        if (val!.isEmpty) {
+                          return 'Enter name';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const AppText(
+                      name: 'Age',
+                      size: 12,
+                      fontWeight: FontWeight.w400,
+                      colors: Colors.grey,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    CustomTextfield(
+                      size: size,
+                      hint: '',
+                      controller: basicControllors.ageControllor,
+                      type: false,
+                      keyboardType: TextInputType.number,
+                      validator: (val) {
+                        if (val!.isEmpty) {
+                          return 'Enter age';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        const AppText(
-                          name: 'Add A New User',
-                          size: 13,
-                          fontWeight: FontWeight.w600,
-                          colors: customBalck,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        // Using Consumer to only rebuild this part when pickedImage changes
-                        InkWell(
+                        CustomButton1(
+                          size: size,
+                          title: 'Cancel',
                           onTap: () {
-                            Provider.of<BasicControllors>(context,
-                                    listen: false)
-                                .pickImage();
+                            basicControllors.nameControllor.clear();
+                            basicControllors.ageControllor.clear();
+                            basicControllors.pickedImage = null;
+                            Navigator.of(context).pop(); // Dismiss the dialog
                           },
-                          child: Consumer<BasicControllors>(
-                            builder: (context, basicprovider, child) {
-                              return basicprovider.pickedImage != null
-                                  ? Align(
-                                      alignment: Alignment.center,
-                                      child: CircleAvatar(
-                                        radius: 40,
-                                        backgroundImage: FileImage(File(
-                                            basicprovider.pickedImage!.path)),
-                                      ),
-                                    )
-                                  : Align(
-                                      alignment: Alignment.center,
-                                      child: Image.asset('assets/img.png'),
-                                    );
-                            },
-                          ),
                         ),
                         const SizedBox(
-                          height: 10,
+                          width: 30,
                         ),
-                        const AppText(
-                          name: 'Name',
-                          size: 12,
-                          fontWeight: FontWeight.w400,
-                          colors: Colors.grey,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        CustomTextfield(
+                        CustomButton1(
                           size: size,
-                          hint: '',
-                          controller: basicControllors.nameControllor,
-                          type: false,
-                          keyboardType: TextInputType.name,
-                          validator: (val) {
-                            if (val!.isEmpty) {
-                              return 'Enter name';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const AppText(
-                          name: 'Age',
-                          size: 12,
-                          fontWeight: FontWeight.w400,
-                          colors: Colors.grey,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        CustomTextfield(
-                          size: size,
-                          hint: '',
-                          controller: basicControllors.ageControllor,
-                          type: false,
-                          keyboardType: TextInputType.number,
-                          validator: (val) {
-                            if (val!.isEmpty) {
-                              return 'Enter age';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            CustomButton1(
-                              size: size,
-                              title: 'Cancel',
-                              onTap: () {
+                          title: 'Save',
+                          onTap: () {
+                            if (formkey.currentState!.validate()) {
+                              if (basicControllors.pickedImage == null) {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                  content: Text(
+                                    "Pick Image",
+                                    style: TextStyle(color: whiteone),
+                                  ),
+                                  backgroundColor: customBalck,
+                                  behavior: SnackBarBehavior.floating,
+                                ));
+                              } else {
+                                Provider.of<AddUserControllor>(context,
+                                        listen: false)
+                                    .addnewUser(UserModel(
+                                        name: basicControllors
+                                            .nameControllor.text,
+                                        age: int.parse(basicControllors
+                                            .ageControllor.text),
+                                        file: basicControllors.file,
+                                        img: basicControllors.pickedImage));
                                 basicControllors.nameControllor.clear();
                                 basicControllors.ageControllor.clear();
                                 basicControllors.pickedImage = null;
-                                Navigator.of(context)
-                                    .pop(); // Dismiss the dialog
-                              },
-                            ),
-                            const SizedBox(
-                              width: 30,
-                            ),
-                            CustomButton1(
-                              size: size,
-                              title: 'Save',
-                              onTap: () {
-                                if (formkey.currentState!.validate()) {
-                                  Provider.of<AddUserControllor>(context,
-                                          listen: false)
-                                      .addnewUser(UserModel(
-                                          name: basicControllors
-                                              .nameControllor.text,
-                                          age: int.parse(basicControllors
-                                              .ageControllor.text),
-                                          file: basicControllors.file,
-                                          img: basicControllors.pickedImage));
-                                  basicControllors.nameControllor.clear();
-                                  basicControllors.ageControllor.clear();
-                                  basicControllors.pickedImage = null;
-                                  Navigator.pop(context);
-                                }
-                              },
-                              type: true,
-                            )
-                          ],
+                                Navigator.pop(context);
+                              }
+                            }
+                          },
+                          type: true,
                         )
                       ],
-                    ),
-                  ),
+                    )
+                  ],
                 ),
               ),
             ),
-            basicControllors.isLoad
-                ? const CircularProgressIndicator()
-                : const SizedBox()
-          ],
+          ),
         );
       },
     );
   }
 
-  addFilter(BuildContext context, Size size) {     // Filter  dailog...
+  addFilter(BuildContext context, Size size) {
+    // Filter  dailog...
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -325,94 +331,91 @@ class HomeScreen extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.all(20),
-            child: SingleChildScrollView(
-              child:
-                  Consumer<BasicControllors>(builder: (context, child, value) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const AppText(
-                      name: '   Sort',
-                      size: 13,
-                      fontWeight: FontWeight.w600,
-                      colors: customBalck,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Consumer<BasicControllors>(
-                            builder: (context, data, child) {
-                          return Radio(
-                            fillColor: const WidgetStatePropertyAll(blue),
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                            value: "All",
-                            groupValue: data.selectedOption,
-                            onChanged: (String? value) {
-                              data.selectedOptions(value);
-                              Navigator.pop(context);
-                            },
-                          );
-                        }),
-                        const AppText(
-                          name: 'All',
-                          size: 12,
-                          fontWeight: FontWeight.w500,
-                          colors: customBalck,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Consumer<BasicControllors>(
-                            builder: (context, data, child) {
-                          return Radio(
-                            fillColor: const WidgetStatePropertyAll(blue),
-                            value: "Elder",
-                            groupValue: data.selectedOption,
-                            onChanged: (String? value) {
-                              data.selectedOptions(value);
-                              Navigator.pop(context);
-                            },
-                          );
-                        }),
-                        const AppText(
-                          name: 'Age: Elder',
-                          size: 12,
-                          fontWeight: FontWeight.w500,
-                          colors: customBalck,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Consumer<BasicControllors>(
-                            builder: (context, data, child) {
-                          return Radio(
-                            fillColor: const WidgetStatePropertyAll(blue),
-                            value: "Younger",
-                            groupValue: data.selectedOption,
-                            onChanged: (String? value) {
-                              data.selectedOptions(value);
-                              Navigator.pop(context);
-                            },
-                          );
-                        }),
-                        const AppText(
-                          name: 'Age: Younger',
-                          size: 12,
-                          fontWeight: FontWeight.w500,
-                          colors: customBalck,
-                        ),
-                      ],
-                    ),
-                  ],
-                );
-              }),
-            ),
+            child: Consumer<BasicControllors>(builder: (context, child, value) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const AppText(
+                    name: '   Sort',
+                    size: 13,
+                    fontWeight: FontWeight.w600,
+                    colors: customBalck,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Consumer<BasicControllors>(
+                          builder: (context, data, child) {
+                        return Radio(
+                          fillColor: const WidgetStatePropertyAll(blue),
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          value: "All",
+                          groupValue: data.selectedOption,
+                          onChanged: (String? value) {
+                            data.selectedOptions(value);
+                            Navigator.pop(context);
+                          },
+                        );
+                      }),
+                      const AppText(
+                        name: 'All',
+                        size: 12,
+                        fontWeight: FontWeight.w500,
+                        colors: customBalck,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Consumer<BasicControllors>(
+                          builder: (context, data, child) {
+                        return Radio(
+                          fillColor: const WidgetStatePropertyAll(blue),
+                          value: "Elder",
+                          groupValue: data.selectedOption,
+                          onChanged: (String? value) {
+                            data.selectedOptions(value);
+                            Navigator.pop(context);
+                          },
+                        );
+                      }),
+                      const AppText(
+                        name: 'Age: Elder',
+                        size: 12,
+                        fontWeight: FontWeight.w500,
+                        colors: customBalck,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Consumer<BasicControllors>(
+                          builder: (context, data, child) {
+                        return Radio(
+                          fillColor: const WidgetStatePropertyAll(blue),
+                          value: "Younger",
+                          groupValue: data.selectedOption,
+                          onChanged: (String? value) {
+                            data.selectedOptions(value);
+                            Navigator.pop(context);
+                          },
+                        );
+                      }),
+                      const AppText(
+                        name: 'Age: Younger',
+                        size: 12,
+                        fontWeight: FontWeight.w500,
+                        colors: customBalck,
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            }),
           ),
         );
       },

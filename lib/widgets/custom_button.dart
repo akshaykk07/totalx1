@@ -8,23 +8,26 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
     required this.size,
-    required this.titile,
+    required this.titile, this.ontap,
   });
 
   final Size size;
   final String titile;
+    final void Function()? ontap;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      width: size.width,
-      decoration: BoxDecoration(
-          color: customBalck, borderRadius: BorderRadius.circular(40)),
-      child: Center(
-        child: AppText(
-          name: titile,
-          size: 14,
-          fontWeight: FontWeight.w600,
+    return InkWell(onTap: ontap,
+      child: Container(
+        height: 50,
+        width: size.width,
+        decoration: BoxDecoration(
+            color: customBalck, borderRadius: BorderRadius.circular(40)),
+        child: Center(
+          child: AppText(
+            name: titile,
+            size: 14,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );

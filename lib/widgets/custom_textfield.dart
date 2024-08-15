@@ -1,5 +1,7 @@
 //Custom TextField Clss.......
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:totalx1/controllors/basic_controllors.dart';
 
 import 'constants/colors.dart';
 
@@ -51,14 +53,18 @@ class CustomTextfield extends StatelessWidget {
                   horizontal: size.width * 0.03)),
         ),
         type
-            ? Positioned(
-                left: size.width * 0.32,
-                top: size.height * 0.01,
-                child: const Text(
-                  '*',
-                  style: TextStyle(color: Colors.red, fontSize: 20),
-                ),
-              )
+            ? Consumer<BasicControllors>(builder: (context, data, child) {
+                return Positioned(
+                  left: size.width * 0.34,
+                  top: size.height * 0.01,
+                  child: data.state
+                      ? const SizedBox()
+                      : const Text(
+                          '*',
+                          style: TextStyle(color: Colors.red, fontSize: 20),
+                        ),
+                );
+              })
             : const SizedBox()
       ],
     );
