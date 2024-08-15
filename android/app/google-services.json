@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "189067051352",
+    "project_id": "back-685c7",
+    "storage_bucket": "back-685c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189067051352:android:bbd346192a0f4ea54ca52d",
+        "android_client_info": {
+          "package_name": "com.akshay.back"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWzRiXFKS1E3k14yJBi6JPFjn6OIqAfo4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
