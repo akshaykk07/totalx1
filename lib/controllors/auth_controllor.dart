@@ -6,7 +6,7 @@ import 'package:totalx1/controllors/basic_controllors.dart';
 import '../views/home_screen.dart';
 import '../views/login_screen.dart';
 import '../views/otp_screen.dart';
-import '../widgets/constants/colors.dart';
+import '../views/widgets/constants/colors.dart';
 
 class AuthControllor {
   // phone number verifiaction function using fire base auth...........

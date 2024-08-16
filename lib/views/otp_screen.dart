@@ -5,9 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:totalx1/controllors/auth_controllor.dart';
 
 import '../controllors/basic_controllors.dart';
-import '../widgets/constants/colors.dart';
-import '../widgets/apptext.dart';
-import '../widgets/custom_button.dart';
+import 'widgets/constants/colors.dart';
+import 'widgets/apptext.dart';
+import 'widgets/custom_button.dart';
 
 // ignore: must_be_immutable
 class OtpScreen extends StatelessWidget {

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:totalx1/controllors/basic_controllors.dart';
 import '../controllors/auth_controllor.dart';
-import '../widgets/constants/colors.dart';
-import '../widgets/apptext.dart';
-import '../widgets/custom_button.dart';
-import '../widgets/custom_textfield.dart';
+import 'widgets/constants/colors.dart';
+import 'widgets/apptext.dart';
+import 'widgets/custom_button.dart';
+import 'widgets/custom_textfield.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});

@@ -8,11 +8,11 @@ import 'package:totalx1/controllors/add_controllor.dart';
 import 'package:totalx1/models/userModel.dart';
 
 import '../controllors/basic_controllors.dart';
-import '../widgets/constants/colors.dart';
-import '../widgets/apptext.dart';
-import '../widgets/custom_button.dart';
-import '../widgets/custom_textfield.dart';
-import '../widgets/user_tile.dart';
+import 'widgets/constants/colors.dart';
+import 'widgets/apptext.dart';
+import 'widgets/custom_button.dart';
+import 'widgets/custom_textfield.dart';
+import 'widgets/user_tile.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
